@@ -1,0 +1,14 @@
+textarea {
+    width: -webkit-fill-available;
+    height: 138px;
+    background: rgba(57, 90, 182, 0.03);
+    border-radius: 20px;
+    border: none;
+    font-family: var(--font-family);
+    font-style: normal;
+    font-weight: 600;
+    font-size: var(--font-size-S);
+    line-height: var(--line-height-S);
+    padding: 10px;
+    margin: 15px 0;
+}

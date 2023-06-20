@@ -1,0 +1,24 @@
+@use "fonts";
+
+:root {
+  //Colors
+  --red: #F77B7B;
+  --red-gold: #F77C78;
+  --purple: #5D47E8;
+  --light-blue: #73E6FF;
+  --neutral: #6F767E;
+  --black: #1A1D1F;
+
+  //Font
+  --font-family: 'Poppins';
+  --font-size-L: 48px;
+  --line-height-L: 72px;
+  --font-size-S: 16px;
+  --line-height-S: 24px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+}

@@ -1,0 +1,43 @@
+.enter-request-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    h1 {
+        color: var(--purple);
+        font-size: var(--font-size-L);
+        line-height: var(--line-height-L);
+        font-family: var(--font-family);
+        font-family: system-ui;
+
+
+        span {
+            color: var(--red);
+        }
+    }
+
+    .body-panel {
+        background-color: #fff;
+        border-radius: 30px;
+        width: 550px;
+        height: 280px;
+        padding: 20px;
+
+        .upper-part {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+
+            p {
+                margin: 0;
+                font-weight: 500;
+                font-size: var(--font-size-S);
+                line-height: var(--line-height-S);
+
+                &:last-child {
+                    flex: 2;
+                }
+            }
+        }
+    }
+}
