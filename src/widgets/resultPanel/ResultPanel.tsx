@@ -2,59 +2,75 @@ import { EnterRequestPanel, GenericList } from "widgets";
 import GenericPlot from "widgets/genericPlot/GenericPlot";
 import Plotly from "plotly.js";
 import "./ResultPanel.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ColorRing } from "react-loader-spinner";
 import Loader from "widgets/loader/Loader";
 import { generateList } from "../../services/api";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
+import { actions } from "../../actions/slice";
 
 interface ResultPanelProps {
-  title: string;
-  isGraph: boolean;
+  data: string; // add this line
 }
-interface ResponseMessage {
+export interface ListResponse {
   columns: string[];
-  values: any[][];
+  rows: any[][];
+  prompt: string;
+}
+export interface GraphResponse {
+  fig: string;
+  prompt: string;
 }
 
-export const ResultPanel: React.FC<ResultPanelProps> = ({ title, isGraph }) => {
-  const [responseMessage, setResponseMessage] =
-    useState<ResponseMessage | null>(null);
+export const ResultPanel: React.FC<ResultPanelProps> = ({ data }) => {
+  const index: number = useAppSelector((state) => state.dataType.value);
 
-  const data = {
-    columns: ["Name", "Age", "Location", "test", "test"],
-    values: [
-      ["John Doe", 25, "New York", "test", "sss"],
-      ["Jane Smith", 30, "London", "test", "sss"],
-    ],
-  };
-
-  const convertedValues: string[][] = data.values.map((row) =>
-    row.map((value) => String(value))
+  const responseStatus: number = useAppSelector(
+    (state) => state.dataType.responseStatus
   );
+  if (data === null || typeof data === "undefined") {
+    return <div></div>;
+  }
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  if (responseStatus == 0) {
+    // not loading show result
 
-    try {
-      const hardcodedValue = {
-        prompt: "show me all the different gender of music",
+    const jsonObject = JSON.parse(data);
+    if (jsonObject.error) {
+      return (
+        <div className="panel">
+          <h2>{jsonObject.error}</h2>
+        </div>
+      );
+    }
+    if (jsonObject.rows) {
+      const response: GraphResponse = {
+        fig: jsonObject.fig,
+        prompt: jsonObject.prompt,
+      };
+      return <GenericPlot fig={response.fig}></GenericPlot>;
+    } else if (jsonObject.fig) {
+      const response: ListResponse = {
+        columns: jsonObject.columns,
+        rows: jsonObject.rows,
+        prompt: jsonObject.prompt,
       };
 
-      const result = await generateList(hardcodedValue);
-      setResponseMessage(result);
-    } catch (error) {
-      // Handle error
+      return (
+        <div className="panel">
+          <h2>{response.prompt}</h2>
+          <GenericList columns={response.columns} values={response.rows} />
+        </div>
+      );
+    } else {
+      return <div></div>;
     }
-  };
-  const formattedValues =
-    responseMessage?.values.map((row) => row.map((value) => String(value))) ||
-    [];
-
-  return (
-    <div className="panel">
-      {/* <Loader /> */}
-      <h2>{true ? title : "test"}</h2>
-      <GenericList columns={data.columns} values={convertedValues} />
-    </div>
-  );
+  } else if (responseStatus == 1)
+    //loading
+    return (
+      <div className="panel">
+        <Loader />
+      </div>
+    );
+  else return <div> </div>;
 };

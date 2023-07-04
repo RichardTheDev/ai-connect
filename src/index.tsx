@@ -2,14 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/index.scss";
 import App from "./App";
-//import 'bootstrap/dist/css/bootstrap.css'
+import { StrictMode } from "react";
+import { render } from "react-dom";
+import { Provider } from "react-redux";
+import store from "../src/services/store";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+render(
+  <StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictMode>,
+  document.getElementById("root")
 );

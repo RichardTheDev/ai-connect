@@ -1,5 +1,5 @@
 textarea {
-    resize: none ;
+    resize: none;
     width: -webkit-fill-available;
     height: 138px;
     background: rgba(57, 90, 182, 0.03);
@@ -12,5 +12,25 @@ textarea {
     line-height: var(--line-height-S);
     padding: 10px;
     margin: 15px 0;
-    
+    scrollbar-width: thin;
+    scrollbar-color: rgba(57, 90, 182, 0.6) rgba(0, 0, 0, 0.1);
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: rgba(57, 90, 182, 0.6);
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(57, 90, 182, 0.8);
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
 }

@@ -1,63 +1,21 @@
 import { useState } from "react";
 import "./SelectElement.scss";
+import { actions } from "../../../actions/slice";
+import { useAppDispatch, useAppSelector } from "../../../services/hooks";
 
 interface OptionI {
   title: string;
   image: any;
 }
 
-export const SelectElement = ({
-  onOptionChange,
-}: {
-  onOptionChange: (index: number) => void;
-}) => {
+export const SelectElement = () => {
+  const chosenOptionIndex = useAppSelector((state) => state.dataType.value);
+  const dispatch = useAppDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
-  const [chosenOptionIndex, setChosenOptionIndex] = useState(0);
+  // const [chosenOptionIndex, setChosenOptionIndex] = useState(0);
 
   const selectOptions: OptionI[] = [
-    {
-      title: "Graph",
-      image: (
-        <svg
-          width="20"
-          height="21"
-          viewBox="0 0 20 21"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M2.49984 1.67676C2.96007 1.67676 3.33317 2.04985 3.33317 2.51009V15.8434C3.33317 16.3037 3.70627 16.6768 4.1665 16.6768H17.4998C17.9601 16.6768 18.3332 17.0499 18.3332 17.5101C18.3332 17.9703 17.9601 18.3434 17.4998 18.3434H4.1665C2.78579 18.3434 1.6665 17.2241 1.6665 15.8434V2.51009C1.6665 2.04985 2.0396 1.67676 2.49984 1.67676Z"
-            fill="#1A1D1F"
-          />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M5.83333 6.67676C6.29357 6.67676 6.66667 7.04985 6.66667 7.51009V14.1768C6.66667 14.637 6.29357 15.0101 5.83333 15.0101C5.3731 15.0101 5 14.637 5 14.1768V7.51009C5 7.04985 5.3731 6.67676 5.83333 6.67676Z"
-            fill="#1A1D1F"
-          />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M9.16683 11.6768C9.62707 11.6768 10.0002 12.0499 10.0002 12.5101V14.1768C10.0002 14.637 9.62707 15.0101 9.16683 15.0101C8.70659 15.0101 8.3335 14.637 8.3335 14.1768V12.5101C8.3335 12.0499 8.70659 11.6768 9.16683 11.6768Z"
-            fill="#1A1D1F"
-          />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M12.4998 3.34326C12.9601 3.34326 13.3332 3.71636 13.3332 4.1766V14.1766C13.3332 14.6368 12.9601 15.0099 12.4998 15.0099C12.0396 15.0099 11.6665 14.6368 11.6665 14.1766V4.1766C11.6665 3.71636 12.0396 3.34326 12.4998 3.34326Z"
-            fill="#1A1D1F"
-          />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M15.8333 8.34326C16.2936 8.34326 16.6667 8.71636 16.6667 9.1766V14.1766C16.6667 14.6368 16.2936 15.0099 15.8333 15.0099C15.3731 15.0099 15 14.6368 15 14.1766V9.1766C15 8.71636 15.3731 8.34326 15.8333 8.34326Z"
-            fill="#1A1D1F"
-          />
-        </svg>
-      ),
-    },
     {
       title: "List",
       image: (
@@ -101,6 +59,49 @@ export const SelectElement = ({
         </svg>
       ),
     },
+    {
+      title: "Graph",
+      image: (
+        <svg
+          width="20"
+          height="21"
+          viewBox="0 0 20 21"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M2.49984 1.67676C2.96007 1.67676 3.33317 2.04985 3.33317 2.51009V15.8434C3.33317 16.3037 3.70627 16.6768 4.1665 16.6768H17.4998C17.9601 16.6768 18.3332 17.0499 18.3332 17.5101C18.3332 17.9703 17.9601 18.3434 17.4998 18.3434H4.1665C2.78579 18.3434 1.6665 17.2241 1.6665 15.8434V2.51009C1.6665 2.04985 2.0396 1.67676 2.49984 1.67676Z"
+            fill="#1A1D1F"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M5.83333 6.67676C6.29357 6.67676 6.66667 7.04985 6.66667 7.51009V14.1768C6.66667 14.637 6.29357 15.0101 5.83333 15.0101C5.3731 15.0101 5 14.637 5 14.1768V7.51009C5 7.04985 5.3731 6.67676 5.83333 6.67676Z"
+            fill="#1A1D1F"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M9.16683 11.6768C9.62707 11.6768 10.0002 12.0499 10.0002 12.5101V14.1768C10.0002 14.637 9.62707 15.0101 9.16683 15.0101C8.70659 15.0101 8.3335 14.637 8.3335 14.1768V12.5101C8.3335 12.0499 8.70659 11.6768 9.16683 11.6768Z"
+            fill="#1A1D1F"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M12.4998 3.34326C12.9601 3.34326 13.3332 3.71636 13.3332 4.1766V14.1766C13.3332 14.6368 12.9601 15.0099 12.4998 15.0099C12.0396 15.0099 11.6665 14.6368 11.6665 14.1766V4.1766C11.6665 3.71636 12.0396 3.34326 12.4998 3.34326Z"
+            fill="#1A1D1F"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M15.8333 8.34326C16.2936 8.34326 16.6667 8.71636 16.6667 9.1766V14.1766C16.6667 14.6368 16.2936 15.0099 15.8333 15.0099C15.3731 15.0099 15 14.6368 15 14.1766V9.1766C15 8.71636 15.3731 8.34326 15.8333 8.34326Z"
+            fill="#1A1D1F"
+          />
+        </svg>
+      ),
+    },
   ];
 
   const renderOption = (
@@ -114,8 +115,7 @@ export const SelectElement = ({
         }
       : (index: number) => {
           setIsOpen(false);
-          setChosenOptionIndex(index);
-          onOptionChange(index); // Call the callback function with the updated index
+          dispatch(actions.setIndex(index));
         };
 
     return (

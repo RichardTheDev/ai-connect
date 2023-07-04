@@ -1,11 +1,14 @@
 import GenerateBtnIcon from "assets/images/icons/generate-button.svg";
 import "./GenerateButton.scss";
-
-export function GenerateButton(){
-    return (
-        <button className="generate-button">
-            <img src={GenerateBtnIcon} alt="Generate Icon"/>
-            Generate
-        </button>
-    )
+interface GenerateButtonProps {
+  onClick: () => void;
 }
+
+export const GenerateButton: React.FC<GenerateButtonProps> = ({ onClick }) => {
+  return (
+    <button className="generate-button" onClick={onClick}>
+      <img src={GenerateBtnIcon} alt="Generate Icon" />
+      Generate
+    </button>
+  );
+};

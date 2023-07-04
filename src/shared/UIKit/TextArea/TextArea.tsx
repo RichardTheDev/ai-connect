@@ -1,30 +1,24 @@
 import { ChangeEvent, useState } from "react";
 import "./TextArea.scss";
+import { useAppDispatch, useAppSelector } from "../../../services/hooks";
+import { actions } from "../../../actions/slice";
 
 interface TextAreaProps {
-  onTextChange: (text: string) => void;
   placeholder?: string;
 }
 
-export function TextArea({ onTextChange, placeholder }: TextAreaProps) {
-  const [text, setText] = useState("");
+export function TextArea({ placeholder }: TextAreaProps) {
+  //const [text, setText] = useState("");
+
+  const text = useAppSelector((state) => state.dataType.text);
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
-    setText(newText);
-    onTextChange(newText); // Call the callback function with the new text
-  };
-
-  const handleClick = () => {
-    setText("");
+    dispatch(actions.setPrompt(newText));
   };
 
   return (
-    <textarea
-      onChange={handleChange}
-      onClick={handleClick}
-      value={text}
-      placeholder={placeholder}
-    />
+    <textarea onChange={handleChange} value={text} placeholder={placeholder} />
   );
 }

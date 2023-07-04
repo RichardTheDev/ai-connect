@@ -1,24 +1,16 @@
 import { GenerateButton, SelectElement, TextArea } from "shared/UIKit";
 import "./EnterRequestPanel.scss";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
 
-export const EnterRequestPanel = () => {
-  const [chosenOptionIndex, setChosenOptionIndex] = useState(0);
-  const [textValue, setTextValue] = useState("");
+interface EnterRequestPanelProps {
+  onGenerateButtonClick: (index: number) => void;
+}
 
-  const handleOptionChange = (index: number) => {
-    setChosenOptionIndex(index);
-  };
-
-  const handleTextChange = (text: string) => {
-    setTextValue(text);
-  };
-
-  const handleButtonClick = () => {
-    console.log("Button Clicked");
-    console.log("Chosen Option Index:", chosenOptionIndex);
-    console.log("Text Value:", textValue);
-  };
+export const EnterRequestPanel: React.FC<EnterRequestPanelProps> = ({
+  onGenerateButtonClick,
+}) => {
+  const index: number = useAppSelector((state) => state.dataType.value);
 
   return (
     <div className="enter-request-panel">
@@ -28,14 +20,11 @@ export const EnterRequestPanel = () => {
       <div className="body-panel">
         <div className="upper-part">
           <p>I want to see a </p>
-          <SelectElement onOptionChange={handleOptionChange} />
+          <SelectElement />
           <p>of</p>
         </div>
-        <TextArea
-          onTextChange={handleTextChange}
-          placeholder="type here what you want to see "
-        />
-        <GenerateButton />
+        <TextArea placeholder="type here what you want to see " />
+        <GenerateButton onClick={() => onGenerateButtonClick(index)} />
       </div>
     </div>
   );
