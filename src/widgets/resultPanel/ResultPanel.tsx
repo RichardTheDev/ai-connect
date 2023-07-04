@@ -1,13 +1,8 @@
-import { EnterRequestPanel, GenericList } from "widgets";
+import { GenericList } from "widgets";
 import GenericPlot from "widgets/genericPlot/GenericPlot";
-import Plotly from "plotly.js";
 import "./ResultPanel.scss";
-import React, { useState, useEffect } from "react";
-import { ColorRing } from "react-loader-spinner";
 import Loader from "widgets/loader/Loader";
-import { generateList } from "../../services/api";
-import { useAppDispatch, useAppSelector } from "../../services/hooks";
-import { actions } from "../../actions/slice";
+import { useAppSelector } from "../../services/hooks";
 
 interface ResultPanelProps {
   data: string; // add this line
@@ -43,13 +38,13 @@ export const ResultPanel: React.FC<ResultPanelProps> = ({ data }) => {
         </div>
       );
     }
-    if (jsonObject.rows) {
+    if (jsonObject.fig) {
       const response: GraphResponse = {
         fig: jsonObject.fig,
         prompt: jsonObject.prompt,
       };
       return <GenericPlot fig={response.fig}></GenericPlot>;
-    } else if (jsonObject.fig) {
+    } else if (jsonObject.rows) {
       const response: ListResponse = {
         columns: jsonObject.columns,
         rows: jsonObject.rows,
