@@ -1,7 +1,7 @@
 import "./GenericList.scss";
 // import "bootstrap/dist/css/bootstrap.css";
 
-interface TableProps {
+export interface TableProps {
   columns: string[];
   values: string[][];
 }
